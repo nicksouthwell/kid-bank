@@ -13,6 +13,14 @@ class AccountControllerTest {
     }
 
     @Test
+    public void formatLessThanOneDollarShouldHaveLeadingZero() {
+        AccountController accountController = new AccountController(null);
+
+        assertThat(accountController.formatAsMoney(99))
+                .isEqualTo("$0.99");
+    }
+
+    @Test
     public void viewBalanceShouldDisplayBalance() {
         Account account = new Account();
         account.deposit(10);
