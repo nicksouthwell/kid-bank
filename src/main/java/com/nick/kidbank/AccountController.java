@@ -9,7 +9,8 @@ public class AccountController {
     @GetMapping("/")
     public String viewBalance(Model model) {
         Account account = new Account();
-        model.addAttribute("balance", account.balance());
+        int balance = account.balance();
+        model.addAttribute("balance", formatAsMoney(balance));
         return "account-balance";
     }
 
