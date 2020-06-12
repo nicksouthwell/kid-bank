@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'com.softeq.gradle.itest' version '1.0.4'
 }
 
 group = 'com.nick'
@@ -33,6 +34,15 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
 }
 
+itestSourceSet {
+    compileClasspath = sourceSets.test.compileClasspath
+    runtimeClasspath = sourceSets.test.runtimeClasspath
+}
+
 test {
+    useJUnitPlatform()
+}
+
+integrationTest {
     useJUnitPlatform()
 }
