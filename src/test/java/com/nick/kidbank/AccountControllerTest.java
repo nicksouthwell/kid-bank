@@ -2,6 +2,8 @@ package com.nick.kidbank;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AccountControllerTest {
@@ -43,7 +45,7 @@ class AccountControllerTest {
     @Test
     public void viewBalanceShouldDisplayBalance() {
         Account account = new Account();
-        account.deposit(10);
+        account.deposit(LocalDateTime.now(), 10, "Bottle Return");
         AccountController accountController = new AccountController(account);
 
         assertThat(accountController.viewBalance()).isEqualTo("$0.10");
