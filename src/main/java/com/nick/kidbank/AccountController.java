@@ -27,11 +27,11 @@ public class AccountController {
         return "account-balance";
     }
 
-    @PostMapping
+    @PostMapping("/deposit")
     public String deposit(DepositCommand depositCommand) {
         int amount = depositCommand.amountInCents();
         account.deposit(amount);
-        return "";
+        return "redirect:/";
     }
 
     public String formatAsMoney(int amount) {
