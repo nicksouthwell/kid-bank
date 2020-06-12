@@ -8,7 +8,7 @@
 Balance: <span th:text="${balance}">$99.00</span>
 
 <form action="#" method="post" th:action="@{/deposit}" th:object="${deposit}">
-    <label>Deposit Amount: <input th:field="*{amount}" type="number"/></label>
+    <label>Deposit Amount: <input step="0.01" th:field="*{amount}" type="number"/></label>
 </form>
 
 </body>
