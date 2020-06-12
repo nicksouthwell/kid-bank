@@ -49,8 +49,4 @@ public class AccountController {
         model.addAttribute("transactions", transactionViewList);
         return "account-balance";
     }
-
-    public String viewBalance() {
-        return formatAsMoney(account.balance());
-    }
 }
