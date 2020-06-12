@@ -2,24 +2,25 @@ package com.nick.kidbank;
 
 import org.junit.jupiter.api.Test;
 
+import static com.nick.kidbank.TransactionView.formatAsMoney;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AccountControllerMoneyFormatTest {
+public class TransactionViewMoneyFormatTest {
     @Test
     void format0AsMoneyResultsInDollarsAndCents() {
-        assertThat(AccountController.formatAsMoney(0))
+        assertThat(formatAsMoney(0))
                 .isEqualTo("$0.00");
     }
 
     @Test
     public void formatLessThanOneDollarShouldHaveLeadingZero() {
-        assertThat(AccountController.formatAsMoney(99))
+        assertThat(formatAsMoney(99))
                 .isEqualTo("$0.99");
     }
 
     @Test
     public void formatMoreThanOneDollarShouldHaveNoLeadingZeroes() throws Exception {
-        assertThat(AccountController.formatAsMoney(123))
+        assertThat(formatAsMoney(123))
                 .isEqualTo("$1.23");
     }
 }
