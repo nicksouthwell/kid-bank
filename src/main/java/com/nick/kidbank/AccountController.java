@@ -15,10 +15,6 @@ public class AccountController {
 
     private Account account;
 
-    public AccountController() {
-        this(new Account());
-    }
-
     public AccountController(Account account) {
         this.account = account;
     }
