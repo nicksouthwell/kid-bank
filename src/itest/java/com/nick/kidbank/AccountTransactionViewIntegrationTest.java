@@ -28,7 +28,7 @@ public class AccountTransactionViewIntegrationTest {
         MvcResult mvcResult = mockMvc.perform(get("/"))
                 .andReturn();
 
-        Collection transactions = (Collection) mvcResult.getModelAndView().getModel().get("transactions");
+        Collection<TransactionView> transactions = transactionsFromModel(mvcResult);
         assertThat(transactions).isEmpty();
     }
 
@@ -39,8 +39,14 @@ public class AccountTransactionViewIntegrationTest {
 
         MvcResult mvcResult = mockMvc.perform(get("/"))
                 .andReturn();
-        Collection<TransactionView> transactions = (Collection<TransactionView>) mvcResult.getModelAndView().getModel().get("transactions");
+
+        Collection<TransactionView> transactions = transactionsFromModel(mvcResult);
         assertThat(transactions)
                 .containsExactly(new TransactionView("01/05/2005", "Cash Deposit", "$12.45", "Birthday gift"));
+    }
+
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
+    private Collection<TransactionView> transactionsFromModel(MvcResult mvcResult) {
+        return (Collection<TransactionView>) mvcResult.getModelAndView().getModel().get("transactions");
     }
 }
