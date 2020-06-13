@@ -24,21 +24,24 @@ public class AccountController {
     @PostMapping("/deposit")
     public String deposit(DepositCommand depositCommand) {
         int amount = depositCommand.amountInCents();
-        account.deposit(LocalDateTime.now(), amount, "Bottle Return");
+        LocalDateTime dateTime = depositCommand.dateAsLocalDateTime();
+        account.deposit(dateTime, amount, "the source");
         return "redirect:/";
     }
 
     @GetMapping("/")
     public String viewBalance(Model model) {
         int balance = account.balance();
+        DepositCommand depositCommand = DepositCommand.createWithTodayDate();
         List<TransactionView> transactionViewList = account.transactions().stream()
                 .sorted(comparing(Transaction::date).reversed())
                 .map(TransactionView::from)
                 .collect(Collectors.toList());
 
         model.addAttribute("balance", formatAsMoney(balance));
-        model.addAttribute("deposit", new DepositCommand());
+        model.addAttribute("deposit", depositCommand);
         model.addAttribute("transactions", transactionViewList);
+
         return "account-balance";
     }
 }

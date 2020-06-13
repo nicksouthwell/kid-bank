@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -15,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccountDepositIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -27,7 +29,7 @@ public class AccountDepositIntegrationTest {
 
     @Test
     public void submitDepositAddsAmountToAccount() throws Exception {
-        mockMvc.perform(post("/deposit").param("amount", "12.45"))
+        mockMvc.perform(post("/deposit").param("amount", "12.45").param("date", "10/29/2019"))
                 .andExpect(redirectedUrl("/"));
 
         mockMvc.perform(get("/"))

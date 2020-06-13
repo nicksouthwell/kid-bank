@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +23,8 @@ public class TransactionView {
 
     public static TransactionView from(Transaction txn) {
         String amountString = formatAsMoney(txn.amount());
-        return new TransactionView(txn.date().toString(), txn.action(), amountString, txn.source());
+        String dateAsString = formatAsDate(txn.date());
+        return new TransactionView(dateAsString, txn.action(), amountString, txn.source());
     }
 
     public static String formatAsMoney(int amount) {
@@ -29,4 +32,7 @@ public class TransactionView {
         return FORMAT_AS_DOLLARS_AND_CENTS.format(amountInDollars);
     }
 
+    public static String formatAsDate(LocalDateTime localDateTime) {
+        return DateTimeFormatter.ofPattern("MM/dd/yyyy").format(localDateTime);
+    }
 }

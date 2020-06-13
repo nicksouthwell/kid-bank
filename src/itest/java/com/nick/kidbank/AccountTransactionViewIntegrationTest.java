@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -19,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccountTransactionViewIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -34,7 +36,10 @@ public class AccountTransactionViewIntegrationTest {
 
     @Test
     public void depositToNewAccountShouldHaveOneDepositTransaction() throws Exception {
-        mockMvc.perform(post("/deposit").param("amount", "12.45"))
+        mockMvc.perform(post("/deposit")
+                        .param("amount", "12.45")
+                        .param("source", "the source")
+                        .param("date", "10/29/2019"))
                 .andExpect(redirectedUrl("/"));
 
         MvcResult mvcResult = mockMvc.perform(get("/"))
@@ -42,7 +47,7 @@ public class AccountTransactionViewIntegrationTest {
 
         Collection<TransactionView> transactions = transactionsFromModel(mvcResult);
         assertThat(transactions)
-                .containsExactly(new TransactionView("01/05/2005", "Cash Deposit", "$12.45", "Birthday gift"));
+                .containsExactly(new TransactionView("10/29/2019", "Deposit", "$12.45", "the source"));
     }
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})

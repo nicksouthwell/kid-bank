@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AccountControllerTest {
     @Test
     public void depositCommandShouldAddToBalance() {
-        DepositCommand depositCommand = new DepositCommand();
+        DepositCommand depositCommand = DepositCommand.createWithTodayDate();
         depositCommand.setAmount("12.34");
 
         Account account = new Account();
