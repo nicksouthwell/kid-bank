@@ -13,6 +13,7 @@ public class DepositCommand {
 
     private String date;
     private String amount;
+    private String source;
 
     public static int decimalToPennies(String rawAmount) {
         BigDecimal decimalAmount = new BigDecimal(rawAmount);
