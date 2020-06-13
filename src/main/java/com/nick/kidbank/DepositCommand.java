@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 @Data
 public class DepositCommand {
-    public static final DateTimeFormatter M_D_YYYY_DATE_FORMATTER = DateTimeFormatter.ofPattern("M/d/yyyy");
+    public static final DateTimeFormatter YYYY_MM_DD_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private String date;
     private String amount;
@@ -21,14 +21,14 @@ public class DepositCommand {
     }
 
     static LocalDateTime toLocalDateTime(String rawDate) {
-        LocalDate localDate = LocalDate.parse(rawDate, M_D_YYYY_DATE_FORMATTER);
+        LocalDate localDate = LocalDate.parse(rawDate, YYYY_MM_DD_DATE_FORMATTER);
         return localDate.atStartOfDay();
     }
 
     public static DepositCommand createWithTodayDate() {
         DepositCommand depositCommand = new DepositCommand();
         LocalDate localDate = LocalDate.now();
-        depositCommand.setDate(localDate.format(M_D_YYYY_DATE_FORMATTER));
+        depositCommand.setDate(localDate.format(YYYY_MM_DD_DATE_FORMATTER));
         return depositCommand;
     }
 
